@@ -11,7 +11,7 @@ function App() {
 
   useEffect(()=> {
       dispatch(setData(userData));
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <AppBar>
