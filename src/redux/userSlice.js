@@ -1,30 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: 0,
+  data : [],
+  pageData: []
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
+    setData: (state, action) => {
+        state.data = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1
+    getData: (state, action) => {
+        const page = action.payload;
+        const limit = 20;
+        state.pageData = state.data.slice((((page-1)*limit)),(page*limit));
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    setPageData: (state, action) => {
+        const searchName = action.payload;
+        state.pageData = state.data.filter((user)=> {
+            return user.first_name.toLowerCase().startsWith(searchName.toLowerCase());
+          }).slice(0,20);
     },
+    domainFilter: (state, action) => {
+      const domain = action.payload;
+      state.pageData = state.data.filter((user)=> {
+        return user.domain === domain;
+      })
+    },
+    genderFilter: (state, action) => {
+      const gender = action.payload;
+      state.pageData = state.data.filter((user)=> {
+        return user.gender === gender;
+      })
+    },
+    availableFilter: (state, action) => {
+      console.log(action.payload);
+      state.pageData = state.data.filter((user) => {
+        return user.available === action.payload;
+      })
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { setData, getData, setPageData, domainFilter, genderFilter, availableFilter } = userSlice.actions
 
 export default userSlice.reducer
