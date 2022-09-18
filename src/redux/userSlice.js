@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   data : [],
-  pageData: []
+  pageData: [],
+  team : {
+    department: [],
+    members: []
+  }
 }
 
 export const userSlice = createSlice({
@@ -40,11 +44,16 @@ export const userSlice = createSlice({
       state.pageData = state.data.filter((user) => {
         return user.available === action.payload;
       })
+    },
+    addToTeam :(state, action) => {
+      const user = action.payload;
+      state.team.members.push(user);
+      state.team.department.push(user.domain);
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setData, getData, setPageData, domainFilter, genderFilter, availableFilter } = userSlice.actions
+export const { setData, getData, setPageData, domainFilter, genderFilter, availableFilter, addToTeam } = userSlice.actions
 
 export default userSlice.reducer
