@@ -13,7 +13,7 @@ export const userSlice = createSlice({
         state.data = action.payload;
     },
     getData: (state, action) => {
-        const page = action.payload;
+        const page = action.payload || 1;
         const limit = 20;
         state.pageData = state.data.slice((((page-1)*limit)),(page*limit));
     },

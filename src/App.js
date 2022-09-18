@@ -1,7 +1,7 @@
 import './App.css';
 import Home from './components/Home';
 import { useDispatch } from 'react-redux';
-import  { setData } from './redux/userSlice';
+import  { getData, setData } from './redux/userSlice';
 import userData from './data/MOCK_DATA.json'
 import { useEffect } from 'react';
 import { AppBar, Toolbar } from '@mui/material';
@@ -11,6 +11,7 @@ function App() {
 
   useEffect(()=> {
       dispatch(setData(userData));
+      dispatch(getData());
   }, [dispatch]);
   return (
     <>
